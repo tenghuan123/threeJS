@@ -74,7 +74,7 @@ const webGlAnimationCloth = () => {
             this.tmp = this.previous;
             this.previous = this.position;
             this.position = newPos;
-            console.log(this)
+            // console.log(this)
             this.a.set( 0, 0, 0);
         }
     }
@@ -189,7 +189,7 @@ const webGlAnimationCloth = () => {
         const correction = diff.multiplyScalar( 1 - distance /currentDist );
         const correctionHalf = correction.multiplyScalar( 0.5 );
         p1.position.add( correctionHalf );
-        p2.position.add( correctionHalf );
+        p2.position.sub( correctionHalf );
     }
             
     const simulate = ( now ) => {
@@ -206,22 +206,22 @@ const webGlAnimationCloth = () => {
             const indices = clothGeometry.index;
             const normals = clothGeometry.attributes.normal;
 
-            // for( let i = 0, il = indices.count; i< il; i +=3 ) {
-            //     for( let j = 0; j < 3; j++ ) {
-            //         indx = indices.getX( i + j );
-            //         normal.fromBufferAttribute( normals, indx );
-            //         tmpForce.copy( normal ).normalize().multiplyScalar( normal.dot( windForce ) );
-            //         particles[ indx ].addForce( tmpForce);
-            //     }
-            // }
+            for( let i = 0, il = indices.count; i< il; i +=3 ) {
+                for( let j = 0; j < 3; j++ ) {
+                    indx = indices.getX( i + j );
+                    normal.fromBufferAttribute( normals, indx );
+                    tmpForce.copy( normal ).normalize().multiplyScalar( normal.dot( windForce ) );
+                    particles[ indx ].addForce( tmpForce);
+                }
+            }
         }
             for( let i = 0, il = particles.length; i < il; i++){
                 const particle = particles[ i ];
                 // console.log(particle);
                 // console.log(gravity)
-                // particle.addForce( gravity );
+                particle.addForce( gravity );
                 // console.log(TIMESTEP_SQ);
-                // particle.integrate( TIMESTEP_SQ );
+                particle.integrate( TIMESTEP_SQ );
             }
         }
 
