@@ -16,8 +16,15 @@ const plane = ( width:number, height:number ) => function(u,v,target){
 
 
 const webGlAnimationCloth = () => {
-    const [enableWind, setenableWind] = useState(true);
-    const [showBall, setshowBall] = useState(false);
+    const togglePinsFunction = () => {
+        pins = pinsFormation[ ~ ~ ( Math.random() * pinsFormation.length ) ];
+    }
+    const params = {
+        enableWind: true,
+        showBall: false,
+        togglePins: togglePinsFunction
+    };
+    const { enableWind, showBall, togglePins } = params;
     
     const DAMPING = 0.03; // 衰减，阻尼
     const DRAG = 1 - DAMPING; // 拖放
@@ -159,7 +166,7 @@ const webGlAnimationCloth = () => {
 
     const cloth = new Cloth( xSegs, ySegs );
 
-    const GRABITY = 981 * 1.4;
+    const GRABITY = 981 * 1.4; // 重力
     const gravity = new THREE.Vector3( 0, - GRABITY, 0).multiplyScalar( MASS );
     const TIMESTEP = 18 / 1000;
     const TIMESTEP_SQ = TIMESTEP * TIMESTEP;
@@ -183,7 +190,7 @@ const webGlAnimationCloth = () => {
     const diff = new THREE.Vector3();
 
     const satisfyConstraints = ( p1, p2, distance ) => {
-        diff.subVectors( p2.position, p1.position );
+        diff.subVectors( p2.position, p1.position ); // 将该向量设置为a - b。
         const currentDist = diff.length();
         if( currentDist === 0) return; // prevents division by 0
         const correction = diff.multiplyScalar( 1 - distance /currentDist );
@@ -217,10 +224,7 @@ const webGlAnimationCloth = () => {
         }
             for( let i = 0, il = particles.length; i < il; i++){
                 const particle = particles[ i ];
-                // console.log(particle);
-                // console.log(gravity)
                 particle.addForce( gravity );
-                // console.log(TIMESTEP_SQ);
                 particle.integrate( TIMESTEP_SQ );
             }
         }
@@ -303,9 +307,6 @@ const webGlAnimationCloth = () => {
 
     pins = pinsFormation[ 1 ];
 
-    const togglePins = () => {
-        pins = pinsFormation[ ~ ~ ( Math.random() * pinsFormation.length ) ];
-    }
 
     const init = () => {
         container = document.createElement( 'div' );
@@ -463,11 +464,6 @@ const webGlAnimationCloth = () => {
 
         window.addEventListener( 'resize', onWindowResize, false );
         const gui = new GUI();
-        const params = {
-            enableWind,
-            showBall,
-            togglePins
-        }
         gui.add( params, 'enableWind' ).name( 'Enable wind' );
         gui.add( params, 'showBall' ).name( 'Show ball' );
         gui.add( params, 'togglePins' ).name( 'Toggle pins' );
