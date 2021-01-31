@@ -479,7 +479,7 @@ const webGlAnimationCloth = () => {
     const onWindowResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setsize( window.innerWidth, window.innerHeight );
+        renderer.setSize( window.innerWidth, window.innerHeight );
     }
     //
     const animateRender = () => {
