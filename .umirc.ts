@@ -6,8 +6,9 @@ export default defineConfig({
   },
   routes: [
     { path: '/', component: '@/pages/index' },
-    { path: '/webgl_animation_cloth',component:'@/pages/webgl_animation_cloth/index'},
-    { path: '/three_study_1',component:'@/pages/webgl_animation_cloth/index_study_1'},
+    { path: '/webgl_animation_cloth',component:'@/pages/webgl_animation_cloth/index' },
+    { path: '/three_study_1',component:'@/pages/webgl_animation_cloth/index_study_1' },
+    { path: '/fairywand',component:'@/pages/webgl_animation_cloth/fairywand' },
   ],
   fastRefresh: {},
 });
