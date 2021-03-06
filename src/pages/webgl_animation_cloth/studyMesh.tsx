@@ -9,6 +9,8 @@ import negz from '../../asset/cube/Park2/negz.jpg'
 import posx from '../../asset/cube/Park2/posx.jpg'
 import posy from '../../asset/cube/Park2/posy.jpg'
 import posz from '../../asset/cube/Park2/posz.jpg'
+// import photo from '../../asset/image/photo.jpg'
+import pig from '../../asset/image/pig.gif'
 
 const StudyMesh = () => {
     // 元素
@@ -41,6 +43,25 @@ const StudyMesh = () => {
         return Mesh;
     }
 
+    const getPig = () => {
+        const planceGeometry = new THREE.PlaneGeometry(5,5);
+        const loader = pigTextture();
+
+        const material = new THREE.MeshBasicMaterial({
+            map:loader,
+            side:THREE.DoubleSide
+        })
+        const Mesh = new THREE.Mesh(planceGeometry,material);
+
+        return Mesh;
+    }
+
+    const pigTextture = () => {
+        const loader = new THREE.TextureLoader();
+        const pigTextture = loader.load(pig);
+        return pigTextture;
+    }
+
     const createWorldBg = (scence:THREE.Scene) => {
         const loader = new THREE.CubeTextureLoader();
         scence.background = loader.load([
@@ -60,11 +81,13 @@ const StudyMesh = () => {
     }
     // const line = getLine();
     const plance = getPlance();
+    const pigs = getPig();
     const axesHelper = getAxesHelper();
     // 场景
     const scence = new THREE.Scene();
     // scence.add(line)
-    scence.add(plance);
+    // scence.add(plance);
+    scence.add(pigs);
     scence.add(axesHelper);
     createWorldBg(scence);
     // 渲染器
