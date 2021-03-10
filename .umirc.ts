@@ -10,7 +10,8 @@ export default defineConfig({
     { path: '/three_study_1',component:'@/pages/webgl_animation_cloth/index_study_1' },
     { path: '/fairywand',component:'@/pages/webgl_animation_cloth/fairywand' },
     { path: '/studyMesh',component:'@/pages/webgl_animation_cloth/studyMesh' },
-    { path: '/loaderObject',component:'@/pages/webgl_animation_cloth/loaderObject'}
+    { path: '/loaderObject',component:'@/pages/webgl_animation_cloth/loaderObject'},
+    { path: '/loaderMMD',component:'@/pages/webgl_animation_cloth/loaderMMd'},
   ],
   fastRefresh: {},
 });
