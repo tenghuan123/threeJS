@@ -12,6 +12,7 @@ export default defineConfig({
     { path: '/studyMesh',component:'@/pages/webgl_animation_cloth/studyMesh' },
     { path: '/loaderObject',component:'@/pages/webgl_animation_cloth/loaderObject'},
     { path: '/loaderMMD',component:'@/pages/webgl_animation_cloth/loaderMMd'},
+    { path: '/lightAndShadow',component:'@/pages/webgl_animation_cloth/lightAndShadow'},
   ],
   fastRefresh: {},
 });
