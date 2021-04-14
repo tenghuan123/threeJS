@@ -17,17 +17,50 @@ class LightAndShadowThree extends SelfThreeBase{
         this.addMesh(this.getCustomMesh());
         this.addMesh(this.getPlaneMesh());
         this.PointLight = this.getPointLight();
+        this.PointLight.castShadow = true;
+        //Set up shadow properties for the light
+        this.PointLight.shadow.mapSize.width = 512; // default
+        this.PointLight.shadow.mapSize.height = 512; // default
+        this.PointLight.shadow.camera.near = 0.5; // default
+        this.PointLight.shadow.camera.far = 500 // default
         this.scence.add(this.PointLight);
         this.PointLightAnimateFn = this.PointLightAnimate();
         this.PointLightAnimateFnchildFn = this.PointAnimateFnchild();
+        this.scence.add(this.addDirectionLight())
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+        // this.addsphereGeometry()
+        this.addCameraHelper()
         this.animate();
     }
 
     addAmbientLight() {
-        // 定义光线
-        const AmbientLight = new THREE.AmbientLight(0xffffff,0.1)
+        // 定义环境光
+        const AmbientLight = new THREE.AmbientLight(0xffffff,0.6)
         // 添加到页面中
         this.scence.add(AmbientLight)
+    }
+
+    addsphereGeometry () {
+        //Create a sphere that cast shadows (but does not receive them)
+        const sphereGeometry = new THREE.SphereBufferGeometry( 5, 32, 32 );
+        const sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xff0000 } );
+        const sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+        sphere.castShadow = true; //default is false
+        sphere.receiveShadow = false; //default
+        this.scence.add( sphere );
+    }
+    addCameraHelper() {
+        const helper = new THREE.CameraHelper( this.PointLight.shadow.camera );
+        this.scence.add( helper );
+    }
+
+    addDirectionLight () {
+        const DirectionLight = new THREE.DirectionalLight(0xffffff, 1)
+        const DirectionLightHelper = new THREE.DirectionalLightHelper(DirectionLight)
+        
+        this.scence.add(DirectionLightHelper)
+        return DirectionLight;
     }
 
     getCustomMesh() {
@@ -41,19 +74,22 @@ class LightAndShadowThree extends SelfThreeBase{
             material
         )
         mesh.position.set(0,1,0)
+        mesh.castShadow = true;
+        mesh.receiveShadow = false;
         return mesh
     }
 
     getPlaneMesh() {
         const geometry = new THREE.PlaneGeometry(500,400)
         const material = new THREE.MeshLambertMaterial({
-            color: new THREE.Color(0xeeeeee)
+            color: new THREE.Color(0xffffff)
         })
 
         const mesh = new THREE.Mesh(
             geometry,
             material
         )
+        mesh.receiveShadow = true
         mesh.rotateX(-Math.PI / 2)
         return mesh
     }
@@ -63,13 +99,14 @@ class LightAndShadowThree extends SelfThreeBase{
     }
 
     getPointLight() {
-        const light = new THREE.PointLight(0xff0000, 1, 100)
+        const light = new THREE.PointLight(0xffffff, 1, 100)
         const lightHelper = new THREE.PointLightHelper(light);
         this.scence.add(lightHelper)
         light.position.set(-50,0,0)
         this.R = Math.sqrt(Math.pow(5,2)*2)
         return light;
     }
+
 
     // 模拟太阳的东升西降
     PointLightAnimate() {
