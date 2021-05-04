@@ -13,6 +13,7 @@ export default defineConfig({
     { path: '/loaderObject',component:'@/pages/webgl_animation_cloth/loaderObject'},
     { path: '/loaderMMD',component:'@/pages/webgl_animation_cloth/loaderMMd'},
     { path: '/lightAndShadow',component:'@/pages/webgl_animation_cloth/lightAndShadow'},
+    { path: '/Mirror',component:'@/pages/webgl_animation_cloth/Mirror'},
   ],
   fastRefresh: {},
 });
