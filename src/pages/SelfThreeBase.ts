@@ -13,6 +13,7 @@ interface SelfThreeBaseProps {
     queryElement:string;
 }
 
+// 基本的three一整套模板
 class SelfThreeBase {
     scence: THREE.Scene;
     camera: THREE.Camera;
